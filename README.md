@@ -9,7 +9,8 @@
 1) Запрещено использовать *Collections Framework*
 2) Можно создавать любые приватные поля и методы (в рамках разумного), но должны быть реализованы все публичные методы и конструкторы из таблицы ниже
 3) Поддержка каких-либо типов кроме *int* не требуется
-4) Если поведение метода неочевидно из описания, то можно воспользоваться [документацией к ArrayList](https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/ArrayList.html)
+4) Если поведение метода неочевидно из описания и тестов, то можно воспользоваться документацией к [ArrayList](https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/ArrayList.html)
+5) Все операции должны соответствовать указанной асимптотике.
 
 
 ### Публичные методы
@@ -17,13 +18,15 @@
 public int get(int index)
 ```
 Возвращает элемент по индексу, асимптотика O(1)
-В случае, если индекс выходит за границы, нужно кинуть *IndexOutOfBoundException* с помощью ключевого слова *throw*
+Допустимые значения 0 <= *index* < size.
+В случае, если индекс выходит за границы, нужно кинуть [*IndexOutOfBoundsException*](https://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html) с помощью ключевого слова *throw*
 
 ```java
 public void set(int index, int value)
 ```
 Присваивает элементу с индексом *index* значение *value*
-В случае, если индекс выходит за границы, нужно кинуть *IndexOutOfBoundException* с помощью ключевого слова *throw*
+Допустимые значения 0 <= *index* < size.
+В случае, если индекс выходит за границы, нужно кинуть [*IndexOutOfBoundsException*](https://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html) с помощью ключевого слова *throw*
 
 ```java
 public void add(int value)
@@ -33,20 +36,23 @@ public void add(int value)
 ```java
 public void add(int index, int value)
 ```
-Вставляет элемент в указанную позицию, асимптотика O(n)
-В случае, если индекс выходит за границы, нужно кинуть *IndexOutOfBoundException* с помощью ключевого слова *throw*
+Вставляет элемент в позицию index, асимптотика O(n)
+Допустимые значения 0 <= *index* <= size.
+В случае, если индекс выходит за границы, нужно кинуть [*IndexOutOfBoundsException*](https://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html) с помощью ключевого слова *throw*
 
 
 ```java
 public void remove(int index)
 ```
 Удаляет элемент по индексу, асимптотика O(n)
-В случае, если индекс выходит за границы, нужно кинуть *IndexOutOfBoundException* с помощью ключевого слова *throw*
+Допустимые значения 0 <= *index* < size.
+В случае, если индекс выходит за границы, нужно кинуть [*IndexOutOfBoundsException*](https://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html) с помощью ключевого слова *throw*
 
 ```java
-public int pop()
+public int removeLast()
 ```
 Удаляет элемент с конца и возвращает его.
+В случае, если список пуст, нужно кинуть [*NoSuchElementException*](https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/NoSuchElementException.html) с помощью ключевого слова *throw*
 
 ```java
 public int indexOf(int value)
@@ -76,12 +82,14 @@ public int[] toArray()
 ```java
 public void clear()
 ```
-Удаляет все элементы списка
+Удаляет все элементы списка (после вызова size() == 0)
 
 ```java
 public boolean equals(Object o)
 ```
-Два списка должны считаться равными если и только если имеют равный размер и элементы в каждой позиции равны.
+Два списка должны считаться равными если
+1) имеют одинаковый размер
+2) элементы в каждой позиции равны
 ```java
 public int hashCode()
 ```
