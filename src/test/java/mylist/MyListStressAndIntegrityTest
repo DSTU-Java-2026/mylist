@@ -1,0 +1,58 @@
+package mylist;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class MyListStressAndIntegrityTest {
+
+    @Test
+    void stressTest() {
+        MyList list = new MyList();
+
+        for (int i = 0; i < 10_000; i++) {
+            list.add(i);
+        }
+
+        for (int i = 0; i < 5_000; i++) {
+            list.remove(0);
+        }
+
+        for (int i = 0; i < 5_000; i++) {
+            list.add(i);
+        }
+
+        assertEquals(10_000, list.size());
+    }
+
+    @Test
+    void sizeShouldBeIndependent() {
+        MyList list = new MyList();
+
+        list.add(1);
+        list.add(2);
+        list.remove(1);
+
+        assertEquals(1, list.size());
+    }
+
+    @Test
+    void manySequentialOperationsConsistency() {
+        MyList list = new MyList();
+
+        for (int i = 0; i < 1000; i++) {
+            list.add(i);
+        }
+
+        for (int i = 0; i < 500; i++) {
+            list.remove(0);
+        }
+
+        for (int i = 0; i < 500; i++) {
+            list.add(i);
+        }
+
+        assertEquals(1000, list.size());
+        assertEquals(500, list.get(0));
+    }
+}
