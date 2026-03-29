@@ -27,7 +27,7 @@ public class MyList {
     public void remove(int index) {
     }
     
-    public int pop() {
+    public int removeLast() {
         return -1;
     }
     

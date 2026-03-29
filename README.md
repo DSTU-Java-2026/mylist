@@ -2,7 +2,7 @@
 Реализация динамической структуры данных на основе массива с автоматическим расширением при переполнении.
 
 ## Описание работы
-Требуется реализовать класс [MyList](./src/main/java/MyList.java), имитирующий работу ArrayList.
+Требуется реализовать класс [MyList](./src/main/java/mylist/MyList.java), имитирующий работу ArrayList.
 
 ## Требования
 ### Общие требования
@@ -19,14 +19,14 @@ public int get(int index)
 ```
 Возвращает элемент по индексу, асимптотика O(1)
 Допустимые значения 0 <= *index* < size.
-В случае, если индекс выходит за границы, нужно кинуть [*IndexOutOfBoundsException*](https://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html) с помощью ключевого слова *throw*
+В случае, если индекс выходит за границы, нужно кинуть [*IndexOutOfBoundsException*](https://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html) с помощью ключевого слова [*throw*](https://docs.oracle.com/javase/tutorial/essential/exceptions/throwing.html)
 
 ```java
 public void set(int index, int value)
 ```
 Присваивает элементу с индексом *index* значение *value*
 Допустимые значения 0 <= *index* < size.
-В случае, если индекс выходит за границы, нужно кинуть [*IndexOutOfBoundsException*](https://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html) с помощью ключевого слова *throw*
+В случае, если индекс выходит за границы, нужно кинуть [*IndexOutOfBoundsException*](https://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html) с помощью ключевого слова [*throw*](https://docs.oracle.com/javase/tutorial/essential/exceptions/throwing.html)
 
 ```java
 public void add(int value)
@@ -38,7 +38,7 @@ public void add(int index, int value)
 ```
 Вставляет элемент в позицию index, асимптотика O(n)
 Допустимые значения 0 <= *index* <= size.
-В случае, если индекс выходит за границы, нужно кинуть [*IndexOutOfBoundsException*](https://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html) с помощью ключевого слова *throw*
+В случае, если индекс выходит за границы, нужно кинуть [*IndexOutOfBoundsException*](https://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html) с помощью ключевого слова [*throw*](https://docs.oracle.com/javase/tutorial/essential/exceptions/throwing.html)
 
 
 ```java
@@ -46,13 +46,13 @@ public void remove(int index)
 ```
 Удаляет элемент по индексу, асимптотика O(n)
 Допустимые значения 0 <= *index* < size.
-В случае, если индекс выходит за границы, нужно кинуть [*IndexOutOfBoundsException*](https://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html) с помощью ключевого слова *throw*
+В случае, если индекс выходит за границы, нужно кинуть [*IndexOutOfBoundsException*](https://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html) с помощью ключевого слова [*throw*](https://docs.oracle.com/javase/tutorial/essential/exceptions/throwing.html)
 
 ```java
 public int removeLast()
 ```
 Удаляет элемент с конца и возвращает его.
-В случае, если список пуст, нужно кинуть [*NoSuchElementException*](https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/NoSuchElementException.html) с помощью ключевого слова *throw*
+В случае, если список пуст, нужно кинуть [*NoSuchElementException*](https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/NoSuchElementException.html) с помощью ключевого слова [*throw*](https://docs.oracle.com/javase/tutorial/essential/exceptions/throwing.html)
 
 ```java
 public int indexOf(int value)
@@ -77,7 +77,7 @@ public boolean isEmpty()
 ```java
 public int[] toArray()
 ```
-Возвращает массив из элемента списка
+Возвращает массив из элементов списка
 
 ```java
 public void clear()
@@ -106,7 +106,7 @@ public MyList()
 ```java
 public MyList(int capacity)
 ```
-Создаёт список с заданным capacity **(не размером)**. Если передано отрицательное значение, поведение должно быть эквивалентно конструктору по умолчанию.
+Создаёт список с заданным capacity **(не размером)**. Если передано отрицательное значение, нужно кинуть [*IllegalArgumentException*](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html) с помощью ключевого слова [*throw*](https://docs.oracle.com/javase/tutorial/essential/exceptions/throwing.html)
 
 ```java
 public MyList(int[] array)
