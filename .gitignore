@@ -18,6 +18,10 @@ buildNumber.properties
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Gradle ###
+.gradle/
+bin/
+
 ### IntelliJ IDEA ###
 .idea/*
 !.idea/codeStyles
