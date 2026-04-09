@@ -20,70 +20,57 @@ public class MyList {
         if (array == null) {
             this.array = new int[0];
         } else {
-            this.array = new int[array.length];
-            for (int i = 0; i < array.length; i++) {
-                this.array[i] = array[i];
-            }
             this.size = array.length;
+            this.array = new int[this.size];
+            System.arraycopy(array, 0, this.array, 0, this.size);
+        }
+    }
+
+    private void checkBounds(int index) {
+        if (index < 0 || index >= this.size) {
+            throw new IndexOutOfBoundsException();
         }
     }
 
     public int get(int index) {
-        if (index < 0 || index >= this.size) {
-            throw new IndexOutOfBoundsException();
-        }
+        this.checkBounds(index);
         return this.array[index];
     }
 
     public void set(int index, int value) {
-        if (index < 0 || index >= this.size) {
-            throw new IndexOutOfBoundsException();
-        }
+        this.checkBounds(index);
         this.array[index] = value;
     }
 
     public void add(int value) {
         if (this.size == this.array.length) {
             int[] array = new int[this.size < 4 ? 8 : this.size * 2];
-            for (int i = 0; i < this.size; i++) {
-                array[i] = this.array[i];
-            }
+            System.arraycopy(this.array, 0, array, 0, this.size);
             this.array = array;
         }
         this.array[this.size++] = value;
     }
 
     public void add(int index, int value) {
-        if (index < 0 || index > this.size) {
-            throw new IndexOutOfBoundsException();
+        if (index != this.size) {
+            this.checkBounds(index);
         }
         if (this.size == this.array.length) {
             int[] array = new int[this.size < 4 ? 8 : this.size * 2];
-            for (int i = 0; i < index; i++) {
-                array[i] = this.array[i];
-            }
-            array[index] = value;
-            for (int i = index; i < this.size; i++) {
-                array[i + 1] = this.array[i];
-            }
+            System.arraycopy(this.array, 0, array, 0, index);
+            System.arraycopy(this.array, index, array, index + 1, this.size - index);
             this.array = array;
-            this.size++;
         } else {
-            for (int i = this.size++; i > index; i--) {
-                this.array[i] = this.array[i - 1];
-            }
-            this.array[index] = value;
+            System.arraycopy(this.array, index, this.array, index + 1, this.size - index);
         }
+        this.array[index] = value;
+        this.size++;
     }
 
     public void remove(int index) {
-        if (index < 0 || index >= this.size) {
-            throw new IndexOutOfBoundsException();
-        }
+        this.checkBounds(index);
         this.size--;
-        for (int i = index; i < this.size; i++) {
-            this.array[i] = this.array[i + 1];
-        }
+        System.arraycopy(this.array, index + 1, this.array, index, this.size - index);
     }
 
     public int removeLast() {
@@ -121,9 +108,7 @@ public class MyList {
 
     public int[] toArray() {
         int[] array = new int[this.size];
-        for (int i = 0; i < this.size; i++) {
-            array[i] = this.array[i];
-        }
+        System.arraycopy(this.array, 0, array, 0, this.size);
         return array;
     }
 
@@ -132,18 +117,21 @@ public class MyList {
     }
 
     public boolean equals(Object o) {
-        if (o instanceof MyList other) {
-            if (this.size != other.size) {
-                return false;
-            }
-            for (int i = 0; i < this.size; i++) {
-                if (this.array[i] != other.array[i]) {
-                    return false;
-                }
-            }
+        if (this == o) {
             return true;
         }
-        return false;
+        if (!(o instanceof MyList other)) {
+            return false;
+        }
+        if (this.size != other.size) {
+            return false;
+        }
+        for (int i = 0; i < this.size; i++) {
+            if (this.array[i] != other.array[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public int hashCode() {
