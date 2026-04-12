@@ -9,32 +9,35 @@ public class MyList {
         size = 0;
     }
 
-    public MyList(int capacity){  //констуктор доступен всем и одно целое число - емкость (сколько всего мест в массиве
+    public MyList(int capacity){
+        if (capacity < 0) {
+            throw new IllegalArgumentException();
+        }//констуктор доступен всем и одно целое число - емкость (сколько всего мест в массиве
         data = new int[capacity];
         size = 0;
     }
 
     public MyList(int[] array) {
-        if (array == null) { //null ведет себя как констуктор по умолч.
-            data = new int[10]; //имя приватного поля (внутренний массив)
+        if (array == null) {
+            data = new int[10];
             size = 0;
-        } else {         //кпируем все числа из переданного массива в наш
+        } else {
             data = new int[array.length];
-            for (int i = 0; i < array.length; i++) { // пока i меньше длины массива и увеличь iна один
-                data[i] = array[i];
-            }
+            System.arraycopy(array, 0, data, 0, array.length);
             size = array.length;
         }
     }
 
-    private void grow() { //метод расширяет массив и ничего не возвращает
+    private void grow() {
         int newCapacity = data.length * 2;
-        int[] newData = new int[newCapacity]; //пекременная с новой вместимостью
-        for (int i = 0; i < size; i++) {
-            newData[i] = data[i];
-        } //кирилл максимович, если вы это читаете, то ответье пж, если не сложно: вот мы увеличили массив в 2 раза, соотвественно он сначала заполнился нулями --> мы добавили наши данные до n индекса, но оставшияся длинна все еще заполнена нулями, которые занимают памяьь, нужно ли как-то обрезать этот хвост?
-        data = newData; //garbage collector удаляет методы на которые большеникто не ссылается
+        if (newCapacity == 0) {
+            newCapacity = 10;
+        }
+        int[] newData = new int[newCapacity];
+        System.arraycopy(data, 0, newData, 0, size);
+        data = newData;
     }
+
 
     public void add(int value) {
         if (size == data.length) {
@@ -44,22 +47,17 @@ public class MyList {
         size++;              //увеличиваем счётчик
     }
 
-    public void add(int index, int value) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException(index  + size);
-        }
-
-        if (size == data.length) {
-            grow();
-        }
-
-        for (int i = size; i > index; i--) {
-            data[i] = data[i - 1];
-        }
-
-        data[index] = value;
-        size++;
+public void add(int index, int value) {
+    if (index < 0 || index > size) {
+        throw new IndexOutOfBoundsException(index + size);
     }
+    if (size == data.length) {
+        grow();
+    }
+    System.arraycopy(data, index, data, index + 1, size - index);
+    data[index] = value;
+    size++;
+}
 
     public int get(int index) {
         if (index < 0 || index >= size) {
@@ -75,13 +73,12 @@ public class MyList {
         data[index] = value;
     }
 
+
     public void remove(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException(index + size);
         }
-        for (int i = index; i < size - 1; i++) {
-            data[i] = data[i + 1];
-        }
+        System.arraycopy(data, index + 1, data, index, size - index - 1);
         size--;
     }
 
@@ -114,13 +111,11 @@ public class MyList {
         return size == 0;
     }
 
-    public int[] toArray() {
-        int[] result = new int[size];  //массив ТОЧНО под размер
-        for (int i = 0; i < size; i++) {
-            result[i] = data[i];
-        }
-        return result;
-    }
+public int[] toArray() {
+    int[] result = new int[size];
+    System.arraycopy(data, 0, result, 0, size);
+    return result;
+}
 
 
     public void clear() {
